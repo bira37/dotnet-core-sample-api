@@ -10,7 +10,7 @@ namespace Commander.Repository
 {
   public interface ICommandRepository
   {
-    Task<IEnumerable<Command>> GetAll();
+    Task<List<Command>> GetAll();
     Task<Command?> GetById(int id);
     Task Insert(Command command);
     Task<Command?> Delete(int id);
@@ -25,7 +25,7 @@ namespace Commander.Repository
       Set = context.Set<Command>();
     }
 
-    public async Task<IEnumerable<Command>> GetAll()
+    public async Task<List<Command>> GetAll()
     {
       return await Set.ToListAsync();
     }

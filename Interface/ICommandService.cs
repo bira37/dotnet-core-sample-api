@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Commander.Models;
+using Commander.Dtos;
 
 namespace Commander.Interface
 {
   public interface ICommandService
   {
-    Task<IEnumerable<Command>> GetAllCommands();
+    Task<List<CommandDto>> GetAllCommands();
 
-    Task<Command> GetCommandById(int id);
+    Task<CommandDto> GetCommandById(int id);
 
     Task InsertCommand(Command command);
 
-    Task<Command?> DeleteCommand(int id);
+    Task<CommandDto?> DeleteCommand(int id);
   }
 }

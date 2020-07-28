@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Commander.Models;
 using Commander.Interface;
-using System;
 using System.Threading.Tasks;
+using Commander.Dtos;
+using Commander.Error;
 
 namespace Commander.Controllers
 {
@@ -21,7 +22,7 @@ namespace Commander.Controllers
 
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Command>), 200)]
-    public async Task<IEnumerable<Command>> GetAllCommands()
+    public async Task<IEnumerable<CommandDto>> GetAllCommands()
     {
       var commandItems = await _service.GetAllCommands();
       return commandItems;
@@ -29,8 +30,8 @@ namespace Commander.Controllers
 
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(Command), 200)]
-    [ProducesResponseType(typeof(string), 404)]
-    public async Task<Command> GetCommandById(int id)
+    [ProducesResponseType(typeof(NotFoundException), 404)]
+    public async Task<CommandDto> GetCommandById(int id)
     {
       var commandItem = await _service.GetCommandById(id);
       return commandItem;
@@ -44,7 +45,7 @@ namespace Commander.Controllers
 
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(Command), 200)]
-    public async Task<Command?> DeleteCommand(int id)
+    public async Task<CommandDto?> DeleteCommand(int id)
     {
       return await _service.DeleteCommand(id);
     }
