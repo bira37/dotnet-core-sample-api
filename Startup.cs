@@ -15,6 +15,7 @@ using Commander.Interface;
 using Microsoft.EntityFrameworkCore;
 using Commander.Database;
 using Commander.Repository;
+using Commander.Error;
 
 namespace Commander
 {
@@ -39,6 +40,8 @@ namespace Commander
 
       // Service
       services.AddTransient<ICommandService, CommandService>();
+
+      services.AddTransient<ExceptionHandlerMiddleware>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,16 +52,20 @@ namespace Commander
         app.UseDeveloperExceptionPage();
       }
 
+
       app.UseHttpsRedirection();
 
       app.UseRouting();
 
       app.UseAuthorization();
 
+      app.UseMiddleware<ExceptionHandlerMiddleware>();
+
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
       });
+
     }
   }
 }
